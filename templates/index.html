@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel Discord</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero">
+            <div>
+                <p class="eyebrow">Panel Discord</p>
+                <h1>{{ snapshot.bot_name }}</h1>
+                <p class="muted">
+                    {% if snapshot.connected %}
+                        Bot connecte et pret a etre pilote.
+                    {% else %}
+                        Bot en attente de connexion. Verifie ton token Discord.
+                    {% endif %}
+                </p>
+            </div>
+            <form method="post" action="{{ url_for('logout') }}">
+                <button class="secondary" type="submit">Deconnexion</button>
+            </form>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <section class="flash-wrap">
+                    {% for category, message in messages %}
+                        <div class="flash {{ category }}">{{ message }}</div>
+                    {% endfor %}
+                </section>
+            {% endif %}
+        {% endwith %}
+
+        <section class="grid top-grid">
+            <article class="card stat-card">
+                <span class="label">Maintenance</span>
+                <strong>{{ 'Activee' if snapshot.maintenance else 'Desactivee' }}</strong>
+                <form method="post" action="{{ url_for('maintenance') }}">
+                    <input type="hidden" name="enabled" value="{{ 'false' if snapshot.maintenance else 'true' }}">
+                    <button type="submit">
+                        {{ 'Couper la maintenance' if snapshot.maintenance else 'Activer la maintenance' }}
+                    </button>
+                </form>
+            </article>
+
+            <article class="card stat-card">
+                <span class="label">Serveurs</span>
+                <strong>{{ snapshot.guilds|length }}</strong>
+                <p class="muted">Selectionne un serveur plus bas pour lancer un lockdown ou un unlock.</p>
+            </article>
+
+            <article class="card stat-card">
+                <span class="label">Mots surveilles</span>
+                <strong>{{ snapshot.bad_words|length }}</strong>
+                <p class="muted">{{ snapshot.bad_words|join(', ') }}</p>
+            </article>
+        </section>
+
+        <section class="grid main-grid">
+            <article class="card">
+                <div class="section-head">
+                    <h2>Actions serveur</h2>
+                    <p class="muted">Verrouille ou deverrouille un serveur entier.</p>
+                </div>
+
+                {% for guild in snapshot.guilds %}
+                    <div class="guild-row">
+                        <div>
+                            <h3>{{ guild.name }}</h3>
+                            <p class="muted">{{ guild.member_count }} membres</p>
+                        </div>
+                        <div class="inline-actions">
+                            <form method="post" action="{{ url_for('lockdown') }}">
+                                <input type="hidden" name="guild_id" value="{{ guild.id }}">
+                                <button type="submit" {% if not snapshot.connected %}disabled{% endif %}>Lockdown</button>
+                            </form>
+                            <form method="post" action="{{ url_for('unlock') }}">
+                                <input type="hidden" name="guild_id" value="{{ guild.id }}">
+                                <button class="secondary" type="submit" {% if not snapshot.connected %}disabled{% endif %}>Unlock</button>
+                            </form>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="muted">Aucun serveur detecte pour le moment.</p>
+                {% endfor %}
+            </article>
+
+            <article class="card">
+                <div class="section-head">
+                    <h2>Suppression de messages</h2>
+                    <p class="muted">Choisis un salon texte puis le nombre de messages a supprimer.</p>
+                </div>
+
+                <form method="post" action="{{ url_for('clear') }}" class="stack">
+                    <label for="channel_id">Salon</label>
+                    <select id="channel_id" name="channel_id" required>
+                        {% for guild in snapshot.guilds %}
+                            {% for channel in guild.channels %}
+                                <option value="{{ channel.id }}">{{ guild.name }} / #{{ channel.name }}</option>
+                            {% endfor %}
+                        {% endfor %}
+                    </select>
+
+                    <label for="amount">Nombre de messages</label>
+                    <input id="amount" name="amount" type="number" min="1" max="100" value="10" required>
+
+                    <button type="submit" {% if not snapshot.connected %}disabled{% endif %}>Supprimer</button>
+                </form>
+            </article>
+
+            <article class="card">
+                <div class="section-head">
+                    <h2>Leaderboard</h2>
+                    <p class="muted">Top des utilisateurs avec le score le plus eleve.</p>
+                </div>
+
+                <div class="leaderboard">
+                    {% for row in snapshot.leaderboard %}
+                        <div class="leader-row">
+                            <span>{{ loop.index }}. {{ row.name }}</span>
+                            <strong>{{ row.score }}</strong>
+                        </div>
+                    {% else %}
+                        <p class="muted">Aucune donnee disponible pour le moment.</p>
+                    {% endfor %}
+                </div>
+            </article>
+        </section>
+    </div>
+</body>
+</html>

@@ -1,18 +1,43 @@
-﻿# PulsePanel Discord Pro
+# Discord Secure Bot Python
 
-Panel admin moderne en Next.js avec login securise et connexion a un vrai bot Discord.
+Bot Discord en Python specialise dans la moderation de haute securite avec slash commands.
+
+## Fonctionnalites
+
+- Moderation protegee avec verification des permissions et de la hierarchie
+- Commandes `/ban`, `/kick`, `/timeout`, `/untimeout`, `/purge`, `/lock`, `/unlock`
+- Commande `/maintenance` pour mettre un serveur en maintenance ou le reouvrir
+- Journalisation vers un salon de moderation
+- Etat de maintenance conserve par serveur dans `data/guild-settings.json`
+
+## Installation
+
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+Copie `.env.example` vers `.env` puis remplis les variables.
+
+## Synchroniser les slash commands
+
+```bash
+python scripts/sync_commands.py
+```
 
 ## Demarrage
 
-1. Copier `.env.example` en `.env.local`
-2. Renseigner `ADMIN_USERNAME`, `ADMIN_PASSWORD`, `JWT_SECRET`, `DISCORD_BOT_TOKEN` et `DISCORD_GUILD_ID`
-3. Lancer `npm install`
-4. Lancer `npm run dev`
+```bash
+python bot.py
+```
 
-## Fonctions
+## Commande maintenance
 
-- page de login admin
-- dashboard protege par cookie HTTP-only
-- route API de connexion/deconnexion
-- route API qui recupere les infos du serveur Discord
-- interface responsive plus propre que la version statique initiale
+`/maintenance enabled:true reason:"Maintenance securite"` :
+- envoie une annonce si un salon est configure
+- empeche `@everyone` d'envoyer des messages dans les salons textuels
+- laisse passer les roles definis dans `SECURITY_BYPASS_ROLE_IDS`
+
+`/maintenance enabled:false` :
+- retire le verrouillage applique par le bot et reouvre les salons

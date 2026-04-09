@@ -1,0 +1,1 @@
+"""Discord secure moderation bot."""

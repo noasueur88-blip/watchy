@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}Connexion Admin{% endblock %}
+
+{% block body %}
+<main class="login-page">
+  <section class="login-card">
+    <p class="eyebrow">Panel web Python</p>
+    <h1>Connexion admin</h1>
+    <p class="muted-copy">Connecte-toi pour acceder au dashboard Discord, verifier la configuration du bot et surveiller l'etat du serveur.</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="alert error">
+          {% for _, message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <form method="post" class="login-form">
+      <label>
+        <span>Identifiant</span>
+        <input type="text" name="username" placeholder="admin" required>
+      </label>
+      <label>
+        <span>Mot de passe</span>
+        <input type="password" name="password" placeholder="********" required>
+      </label>
+      <button type="submit" class="primary-btn">Entrer dans le panel</button>
+    </form>
+
+    <div class="login-help">
+      <strong>Besoin d'aide ?</strong>
+      <p class="muted-copy">Le panel utilise <code>ADMIN_USERNAME</code>, <code>ADMIN_PASSWORD</code>, <code>DISCORD_BOT_TOKEN</code> et <code>DISCORD_GUILD_ID</code> depuis le fichier <code>.env</code>.</p>
+    </div>
+  </section>
+</main>
+{% endblock %}

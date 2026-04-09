@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion Panel Discord</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="auth-page">
+    <main class="auth-card">
+        <p class="eyebrow">Discord Control Panel</p>
+        <h1>Connexion securisee</h1>
+        <p class="muted">Entre le mot de passe du panel defini dans ton fichier <code>.env</code>.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="post" class="stack">
+            <label for="password">Mot de passe</label>
+            <input id="password" name="password" type="password" placeholder="••••••••" required>
+            <button type="submit">Entrer dans le panel</button>
+        </form>
+    </main>
+</body>
+</html>
