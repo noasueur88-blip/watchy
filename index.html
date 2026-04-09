@@ -1,0 +1,227 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PulsePanel Discord</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Manrope:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand">
+        <div class="brand-mark">P</div>
+        <div>
+          <p class="eyebrow">Discord Suite</p>
+          <h1>PulsePanel</h1>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-panel="dashboard">Dashboard</button>
+        <button class="nav-item" data-panel="members">Membres</button>
+        <button class="nav-item" data-panel="tickets">Tickets</button>
+        <button class="nav-item" data-panel="automation">Automatisation</button>
+        <button class="nav-item" data-panel="settings">Parametres</button>
+      </nav>
+
+      <div class="server-card">
+        <p class="eyebrow">Serveur actif</p>
+        <h2>Mon Discord Communaute</h2>
+        <p>Moderation rapide, statistiques live et gestion des salons.</p>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Panel de gestion</p>
+          <h2>Pilote ton serveur Discord depuis une seule interface</h2>
+          <p class="hero-copy">Surveille l'activite, gere les tickets et lance des actions rapides sans te perdre dans les menus.</p>
+        </div>
+
+        <div class="hero-actions">
+          <button class="primary-btn" id="syncButton">Synchroniser</button>
+          <button class="ghost-btn">Inviter le bot</button>
+        </div>
+      </header>
+
+      <section class="stats-grid" id="dashboard">
+        <article class="stat-card featured">
+          <p class="eyebrow">Activite 24h</p>
+          <h3>2 481 messages</h3>
+          <p>Hausse de 18% par rapport a hier, surtout sur <strong>#general</strong> et <strong>#annonces</strong>.</p>
+        </article>
+
+        <article class="stat-card">
+          <p class="eyebrow">Membres actifs</p>
+          <h3>684</h3>
+          <p>42 nouveaux membres cette semaine.</p>
+        </article>
+
+        <article class="stat-card">
+          <p class="eyebrow">Tickets ouverts</p>
+          <h3>09</h3>
+          <p>Temps moyen de resolution: 17 min.</p>
+        </article>
+
+        <article class="stat-card">
+          <p class="eyebrow">Actions mod</p>
+          <h3>31</h3>
+          <p>Mute, warn, purge et verification automatique.</p>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel members-panel" id="members">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Membres</p>
+              <h3>Derniere activite</h3>
+            </div>
+            <span class="badge online">118 en ligne</span>
+          </div>
+
+          <div class="member-list">
+            <div class="member-row">
+              <div>
+                <strong>Nova</strong>
+                <p>Moderateur</p>
+              </div>
+              <span class="status-dot"></span>
+            </div>
+            <div class="member-row">
+              <div>
+                <strong>Luma</strong>
+                <p>Support Ticket</p>
+              </div>
+              <span class="status-dot"></span>
+            </div>
+            <div class="member-row">
+              <div>
+                <strong>Kairo</strong>
+                <p>Booster Niveau 2</p>
+              </div>
+              <span class="status-dot idle"></span>
+            </div>
+            <div class="member-row">
+              <div>
+                <strong>Yume</strong>
+                <p>Nouveau membre</p>
+              </div>
+              <span class="status-dot offline"></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel" id="tickets">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Support</p>
+              <h3>Tickets prioritaires</h3>
+            </div>
+            <button class="ghost-btn small-btn">Voir tout</button>
+          </div>
+
+          <div class="ticket-list">
+            <div class="ticket-card">
+              <span class="ticket-tag urgent">Urgent</span>
+              <h4>Probleme de verification</h4>
+              <p>Utilisateur bloque a l'arrivee sur le serveur.</p>
+            </div>
+            <div class="ticket-card">
+              <span class="ticket-tag info">Info</span>
+              <h4>Role partenaire</h4>
+              <p>Demande d'ajout d'un role pour un createur invite.</p>
+            </div>
+          </div>
+        </article>
+
+        <article class="panel" id="automation">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Automatisation</p>
+              <h3>Actions rapides</h3>
+            </div>
+          </div>
+
+          <div class="action-grid">
+            <button class="action-card" data-action="welcome">
+              <strong>Message de bienvenue</strong>
+              <span>Activer l'accueil auto</span>
+            </button>
+            <button class="action-card" data-action="cleanup">
+              <strong>Nettoyage salon</strong>
+              <span>Purger les messages de spam</span>
+            </button>
+            <button class="action-card" data-action="raid">
+              <strong>Mode anti-raid</strong>
+              <span>Renforcer la securite</span>
+            </button>
+            <button class="action-card" data-action="stats">
+              <strong>Rapport hebdo</strong>
+              <span>Generer un resume du serveur</span>
+            </button>
+          </div>
+        </article>
+
+        <article class="panel settings-panel" id="settings">
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">Configuration</p>
+              <h3>Modules actifs</h3>
+            </div>
+          </div>
+
+          <label class="toggle-row">
+            <span>Moderation automatique</span>
+            <input type="checkbox" checked>
+          </label>
+          <label class="toggle-row">
+            <span>Logs staff</span>
+            <input type="checkbox" checked>
+          </label>
+          <label class="toggle-row">
+            <span>Tickets support</span>
+            <input type="checkbox" checked>
+          </label>
+          <label class="toggle-row">
+            <span>Statistiques vocales</span>
+            <input type="checkbox">
+          </label>
+        </article>
+      </section>
+
+      <section class="activity-feed">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Flux live</p>
+            <h3>Dernieres actions</h3>
+          </div>
+          <span class="badge pulse" id="syncState">Pret</span>
+        </div>
+
+        <div class="feed-list" id="feedList">
+          <div class="feed-item">
+            <strong>Bot</strong>
+            <p>Le module anti-spam a supprime 14 messages suspects.</p>
+          </div>
+          <div class="feed-item">
+            <strong>Support</strong>
+            <p>Le ticket #248 a ete assigne a Nova.</p>
+          </div>
+          <div class="feed-item">
+            <strong>Serveur</strong>
+            <p>Le salon vocal "Meeting Staff" a atteint 12 participants.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
